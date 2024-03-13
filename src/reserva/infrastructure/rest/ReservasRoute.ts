@@ -73,7 +73,7 @@ routerReservas.get('/solicitudes', isAuth, async (req, res) => {
   
     try {
       const query = `
-        SELECT R.id AS reserva_id, V.id AS viaje_id, V.origen, V.destino, V.fechasalida, R.asientosreservados, R.estadoreserva
+        SELECT R.id AS reserva_id, V.id AS viaje_id, V.origen, V.destino, V.fechasalida, R.asientosreservados, R.estadoreserva, R.pasajero
         FROM Reservas R
         JOIN Viajes V ON R.viaje = V.id
         WHERE V.conductor = '${conductorEmail}'
