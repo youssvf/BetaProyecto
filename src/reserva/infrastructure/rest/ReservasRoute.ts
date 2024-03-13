@@ -68,4 +68,24 @@ routerReservas.get('/historial/', isAuth, async (req, res) => {
     }
 });
 
+routerReservas.get('/solicitudes', isAuth, async (req, res) => {
+    const conductorEmail = req.body.userEmail; 
+  
+    try {
+      const query = `
+        SELECT R.id AS reserva_id, V.id AS viaje_id, V.origen, V.destino, V.fechasalida, R.asientosreservados, R.estadoreserva
+        FROM Reservas R
+        JOIN Viajes V ON R.viaje = V.id
+        WHERE V.conductor = '${conductorEmail}'
+          AND R.estadoreserva = 'pendiente';
+      `;
+  
+      const reservasPendientes = await executeQuery(query);
+      res.json(reservasPendientes);
+    } catch (error) {
+      console.error('Error al obtener las reservas pendientes:', error);
+      res.status(500).json({ message: 'Error interno del servidor al obtener las reservas pendientes.' });
+    }
+  });
+
 export default routerReservas;
