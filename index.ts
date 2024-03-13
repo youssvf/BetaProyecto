@@ -4,6 +4,8 @@ import cors from "cors"
 import { routerUsuarios } from "./src/usuarios/infrastructure/rest/Usuario.router";
 import routerViajes from "./src/viajes/infrastructure/rest/ViajeRoute";
 import routerReservas from "./src/reserva/infrastructure/rest/ReservasRoute";
+import * as swaggerUi from "swagger-ui-express";
+import * as swaggerOutput from "./swagger_output.json";
 
 
 dotenv.config();
@@ -18,9 +20,14 @@ const options: cors.CorsOptions = {
 app.use(express.json());
 app.use(cors(options));
 
-app.use('/api/usuarios', routerUsuarios);
-app.use('/api/viajes', routerViajes);
-app.use('/api/reservas',routerReservas);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+
+
+const api = 'api';
+
+app.use(`/${api}/usuarios`, routerUsuarios);
+app.use(`/${api}/viajes`, routerViajes);
+app.use(`/${api}/reservas`,routerReservas);
 
 
 app.listen(port, () => {
