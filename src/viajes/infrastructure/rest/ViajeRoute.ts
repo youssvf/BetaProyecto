@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import Viaje from "../../domain/Viaje";
 import ViajeRepository from "../../domain/ViajeRepository";
 import ViajeRepositoryPostgres from "../db/ViajeRepositoryPostgres";
